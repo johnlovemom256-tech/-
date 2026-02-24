@@ -1,0 +1,1385 @@
+<!doctype html>
+<html lang="th" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ท่องเที่ยวแม่วงก์ - Mae Wong Tourism</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Sarabun:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Sarabun', sans-serif;
+    }
+    
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .gradient-overlay {
+      background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.5) 100%);
+    }
+    
+    .glass-card {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    
+    .luxury-gradient {
+      background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 50%, #1a472a 100%);
+    }
+    
+    .gold-accent {
+      color: #d4af37;
+    }
+    
+    .gold-bg {
+      background: linear-gradient(135deg, #d4af37 0%, #f4e4bc 50%, #d4af37 100%);
+    }
+    
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: #d4af37;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .card-hover {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
+    }
+    
+    .image-zoom {
+      transition: transform 0.6s ease;
+    }
+    
+    .image-zoom:hover {
+      transform: scale(1.1);
+    }
+    
+    .chat-bubble {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .modal-overlay {
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(10px);
+    }
+    
+    .gallery-thumb {
+      transition: all 0.3s ease;
+    }
+    
+    .gallery-thumb:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(212,175,55,0.5);
+    }
+    
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+    }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #1a472a;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 4px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-gray-50">
+  <div id="app" class="h-full overflow-auto"><!-- Navigation -->
+   <nav id="main-nav" class="luxury-gradient fixed top-0 left-0 right-0 z-50 shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+     <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+       <div class="w-12 h-12 rounded-full gold-bg flex items-center justify-center"><span class="text-2xl">🌳</span>
+       </div>
+       <div>
+        <h1 id="site-title" class="text-white font-display text-xl font-bold">Mae Wong Tourism</h1>
+        <p class="text-emerald-200 text-xs">ท่องเที่ยวแม่วงก์ นครสวรรค์</p>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-8"><a onclick="navigateTo('home')" class="nav-link text-white hover:text-yellow-300 cursor-pointer font-medium">หน้าแรก</a> <a onclick="navigateTo('attractions')" class="nav-link text-white hover:text-yellow-300 cursor-pointer font-medium">สถานที่ท่องเที่ยว</a> <a onclick="navigateTo('food')" class="nav-link text-white hover:text-yellow-300 cursor-pointer font-medium">อาหารน่ากิน</a> <a onclick="navigateTo('seasons')" class="nav-link text-white hover:text-yellow-300 cursor-pointer font-medium">ฤดูกาลท่องเที่ยว</a> <a onclick="navigateTo('equipment')" class="nav-link text-white hover:text-yellow-300 cursor-pointer font-medium">อุปกรณ์เตรียมตัว</a> <a onclick="navigateTo('contact')" class="nav-link text-white hover:text-yellow-300 cursor-pointer font-medium">ติดต่อ</a>
+      </div><button onclick="toggleMobileMenu()" class="md:hidden text-white text-2xl">☰</button>
+     </div><!-- Mobile Menu -->
+     <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-emerald-600 pt-4">
+      <div class="flex flex-col gap-3"><a onclick="navigateTo('home'); toggleMobileMenu()" class="text-white hover:text-yellow-300 cursor-pointer py-2">🏠 หน้าแรก</a> <a onclick="navigateTo('attractions'); toggleMobileMenu()" class="text-white hover:text-yellow-300 cursor-pointer py-2">🏞️ สถานที่ท่องเที่ยว</a> <a onclick="navigateTo('food'); toggleMobileMenu()" class="text-white hover:text-yellow-300 cursor-pointer py-2">🍜 อาหารน่ากิน</a> <a onclick="navigateTo('seasons'); toggleMobileMenu()" class="text-white hover:text-yellow-300 cursor-pointer py-2">🗓️ ฤดูกาลท่องเที่ยว</a> <a onclick="navigateTo('equipment'); toggleMobileMenu()" class="text-white hover:text-yellow-300 cursor-pointer py-2">🎒 อุปกรณ์เตรียมตัว</a> <a onclick="navigateTo('contact'); toggleMobileMenu()" class="text-white hover:text-yellow-300 cursor-pointer py-2">📞 ติดต่อ</a>
+      </div>
+     </div>
+    </div>
+   </nav><!-- Page Container -->
+   <div id="page-container" class="pt-20"><!-- HOME PAGE -->
+    <div id="page-home" class="page-content"><!-- Hero Section -->
+     <section class="relative h-screen min-h-[600px]">
+      <div class="absolute inset-0"><img src="C:\งานเว็ปไซต์\black.png" alt="Mae Wong National Park" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1a472a 0%, #2d5a3f 100%)'; this.alt='Mae Wong Landscape';">
+       <div class="gradient-overlay absolute inset-0"></div>
+      </div>
+      <div class="relative z-10 h-full flex items-center justify-center text-center px-4">
+       <div class="max-w-4xl fade-in">
+        <p class="gold-accent text-lg md:text-xl mb-4 tracking-widest">✦ DISCOVER THE HIDDEN GEM ✦</p>
+        <h1 id="welcome-text" class="font-display text-4xl md:text-6xl lg:text-7xl text-white font-bold mb-6 leading-tight">ยินดีต้อนรับสู่<br><span class="gold-accent">แม่วงก์</span></h1>
+        <p class="text-gray-200 text-lg md:text-xl mb-8 max-w-2xl mx-auto">สัมผัสความงดงามของธรรมชาติบริสุทธิ์ ณ อุทยานแห่งชาติแม่วงก์ จังหวัดนครสวรรค์ ดินแดนแห่งขุนเขาและสายน้ำ</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center"><button onclick="navigateTo('attractions')" class="gold-bg text-emerald-900 px-8 py-4 rounded-full font-bold hover:shadow-2xl transition-all transform hover:scale-105"> 🌿 สำรวจสถานที่ท่องเที่ยว </button> <button onclick="openChatbot()" class="border-2 border-yellow-400 text-yellow-400 px-8 py-4 rounded-full font-bold hover:bg-yellow-400 hover:text-emerald-900 transition-all"> 💬 สอบถามข้อมูล </button>
+        </div>
+       </div>
+      </div>
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"><span class="text-white text-3xl">↓</span>
+      </div>
+     </section><!-- Stats Section -->
+     <section class="luxury-gradient py-16">
+      <div class="max-w-6xl mx-auto px-4">
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="fade-in">
+         <p class="text-4xl md:text-5xl font-bold gold-accent mb-2">5+</p>
+         <p class="text-emerald-100">สถานที่ท่องเที่ยว</p>
+        </div>
+        <div class="fade-in">
+         <p class="text-4xl md:text-5xl font-bold gold-accent mb-2">894</p>
+         <p class="text-emerald-100">กม² พื้นที่อุทยาน</p>
+        </div>
+        <div class="fade-in">
+         <p class="text-4xl md:text-5xl font-bold gold-accent mb-2">1,964</p>
+         <p class="text-emerald-100">ม. ยอดเขาโมโกจู</p>
+        </div>
+        <div class="fade-in">
+         <p class="text-4xl md:text-5xl font-bold gold-accent mb-2">~120</p>
+         <p class="text-emerald-100">กม. จาก มรภ.นครสวรรค์</p>
+        </div>
+       </div>
+      </div>
+     </section><!-- Featured Attractions Preview -->
+     <section class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4">
+       <div class="text-center mb-16">
+        <p class="gold-accent tracking-widest mb-2">✦ FEATURED DESTINATIONS ✦</p>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-emerald-900 mb-4">สถานที่ท่องเที่ยวยอดนิยม</h2>
+        <div class="section-divider w-32 mx-auto"></div>
+       </div>
+       <div class="grid md:grid-cols-3 gap-8"><!-- Preview Card 1 -->
+        <div class="card-hover glass-card rounded-2xl overflow-hidden shadow-xl cursor-pointer" onclick="openAttractionDetail('kaeng-lan-nok-yung')">
+         <div class="relative h-64 overflow-hidden"><img src="C:\งานเว็ปไซต์\ลานปก1.jpg" alt="แก่งลานนกยูง" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1a472a, #2d5a3f)'; this.alt='แก่งลานนกยูง';">
+          <div class="absolute top-4 right-4 bg-yellow-400 text-emerald-900 px-3 py-1 rounded-full text-sm font-bold">
+           ยอดนิยม
+          </div>
+         </div>
+         <div class="p-6">
+          <h3 class="font-display text-2xl font-bold text-emerald-900 mb-2">แก่งลานนกยูง</h3>
+          <p class="text-gray-600 mb-4">ลานหินกว้างริมน้ำที่มีนกยูงป่ามาหากินเป็นประจำ</p>
+          <div class="flex items-center justify-between"><span class="text-emerald-600 font-medium">📍 ~125 กม. จาก มรภ.นว.</span> <span class="gold-accent font-bold">ดูเพิ่มเติม →</span>
+          </div>
+         </div>
+        </div><!-- Preview Card 2 -->
+        <div class="card-hover glass-card rounded-2xl overflow-hidden shadow-xl cursor-pointer" onclick="openAttractionDetail('namtok-mae-rewa')">
+         <div class="relative h-64 overflow-hidden"><img src="C:\งานเว็ปไซต์\แม่เรว่า.png" alt="น้ำตกแม่เรวา" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1a472a, #2d5a3f)'; this.alt='น้ำตกแม่เรวา';">
+          <div class="absolute top-4 right-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+           ธรรมชาติ
+          </div>
+         </div>
+         <div class="p-6">
+          <h3 class="font-display text-2xl font-bold text-emerald-900 mb-2">น้ำตกแม่เรวา</h3>
+          <p class="text-gray-600 mb-4">น้ำตก 9 ชั้นที่สวยงามที่สุดในแม่วงก์</p>
+          <div class="flex items-center justify-between"><span class="text-emerald-600 font-medium">📍 ~130 กม. จาก มรภ.นว.</span> <span class="gold-accent font-bold">ดูเพิ่มเติม →</span>
+          </div>
+         </div>
+        </div><!-- Preview Card 3 -->
+        <div class="card-hover glass-card rounded-2xl overflow-hidden shadow-xl cursor-pointer" onclick="openAttractionDetail('yod-khao-mokochu')">
+         <div class="relative h-64 overflow-hidden"><img src="C:\งานเว็ปไซต์\เขาโมจู.png" alt="ยอดเขาโมโกจู" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1a472a, #2d5a3f)'; this.alt='ยอดเขาโมโกจู';">
+          <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+           ท้าทาย
+          </div>
+         </div>
+         <div class="p-6">
+          <h3 class="font-display text-2xl font-bold text-emerald-900 mb-2">ยอดเขาโมโกจู</h3>
+          <p class="text-gray-600 mb-4">ยอดเขาสูงสุดขอนครสวรรค์ 1,964 เมตร</p>
+          <div class="flex items-center justify-between"><span class="text-emerald-600 font-medium">📍 ~140 กม. จาก มรภ.นว.</span> <span class="gold-accent font-bold">ดูเพิ่มเติม →</span>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="text-center mt-12"><button onclick="navigateTo('attractions')" class="luxury-gradient text-white px-10 py-4 rounded-full font-bold hover:shadow-2xl transition-all transform hover:scale-105"> ดูสถานที่ทั้งหมด → </button>
+       </div>
+      </div>
+     </section><!-- Quick Info Cards -->
+     <section class="py-20 bg-emerald-900">
+      <div class="max-w-7xl mx-auto px-4">
+       <div class="grid md:grid-cols-3 gap-8">
+        <div onclick="navigateTo('seasons')" class="glass-card rounded-2xl p-8 text-center cursor-pointer card-hover">
+         <div class="text-5xl mb-4">
+          🗓️
+         </div>
+         <h3 class="font-display text-2xl font-bold text-emerald-900 mb-2">ฤดูกาลท่องเที่ยว</h3>
+         <p class="text-gray-600">ช่วงเวลาที่เหมาะสมสำหรับแต่ละสถานที่</p>
+        </div>
+        <div onclick="navigateTo('food')" class="glass-card rounded-2xl p-8 text-center cursor-pointer card-hover">
+         <div class="text-5xl mb-4">
+          🍜
+         </div>
+         <h3 class="font-display text-2xl font-bold text-emerald-900 mb-2">อาหารน่ากินแม่วงก์</h3>
+         <p class="text-gray-600">ร้านอาหารและเมนูแนะนำในพื้นที่</p>
+        </div>
+        <div onclick="navigateTo('equipment')" class="glass-card rounded-2xl p-8 text-center cursor-pointer card-hover">
+         <div class="text-5xl mb-4">
+          🎒
+         </div>
+         <h3 class="font-display text-2xl font-bold text-emerald-900 mb-2">อุปกรณ์เตรียมตัว</h3>
+         <p class="text-gray-600">สิ่งที่ต้องเตรียมก่อนออกเดินทาง</p>
+        </div>
+       </div>
+      </div>
+     </section>
+    </div><!-- ATTRACTIONS PAGE -->
+    <div id="page-attractions" class="page-content hidden">
+     <section class="py-12 luxury-gradient">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+       <p class="gold-accent tracking-widest mb-2">✦ EXPLORE ✦</p>
+       <h1 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">สถานที่ท่องเที่ยวทั้งหมด</h1>
+       <p class="text-emerald-100 max-w-2xl mx-auto">สำรวจความงดงามของธรรมชาติในอุทยานแห่งชาติแม่วงก์</p>
+      </div>
+     </section>
+     <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4">
+       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="attractions-grid"><!-- Attraction 1: แก่งลานนกยูง -->
+        <div class="card-hover glass-card rounded-2xl overflow-hidden shadow-xl cursor-pointer" onclick="openAttractionDetail('kaeng-lan-nok-yung')">
+         <div class="relative h-56 overflow-hidden"><img src="C:\งานเว็ปไซต์\ลานปก1.png" alt="แก่งลานนกยูง" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1a472a, #2d5a3f)';">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4"><span class="bg-yellow-400 text-emerald-900 px-2 py-1 rounded text-xs font-bold">ยอดนิยม</span>
+          </div>
+         </div>
+         <div class="p-5">
+          <h3 class="font-display text-xl font-bold text-emerald-900 mb-2">1. แก่งลานนกยูง</h3>
+          <p class="text-gray-600 text-sm mb-3">ลานหินกว้างริมแม่น้ำแม่วงก์ เป็นจุดที่นกยูงป่ามาหากินในช่วงเช้า-เย็น สามารถกางเต็นท์พักแรมได้</p>
+          <div class="flex items-center justify-between text-sm"><span class="text-emerald-600">📍 ~125 กม.</span> <span class="gold-accent font-bold">ดูรายละเอียด →</span>
+          </div>
+         </div>
+        </div><!-- Attraction 2: แก่งเกาะใหญ่ -->
+        <div class="card-hover glass-card rounded-2xl overflow-hidden shadow-xl cursor-pointer" onclick="openAttractionDetail('kaeng-koh-yai')">
+         <div class="relative h-56 overflow-hidden"><img src="C:\งานเว็ปไซต์\แก่งปก1.png" alt="แก่งเกาะใหญ่" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1a472a, #2d5a3f)';">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4"><span class="bg-blue-400 text-white px-2 py-1 rounded text-xs font-bold">เล่นน้ำ</span>
+          </div>
+         </div>
+         <div class="p-5">
+          <h3 class="font-display text-xl font-bold text-emerald-900 mb-2">2. แก่งเกาะใหญ่</h3>
+          <p class="text-gray-600 text-sm mb-3">แก่งหินขนาดใหญ่กลางลำน้ำแม่วงก์ น้ำใสเย็น เหมาะสำหรับเล่นน้ำและพักผ่อน มีลานกางเต็นท์</p>
+          <div class="flex items-center justify-between text-sm"><span class="text-emerald-600">📍 ~122 กม.</span> <span class="gold-accent font-bold">ดูรายละเอียด →</span>
+          </div>
+         </div>
+        </div><!-- Attraction 3: น้ำตกแม่เรวา -->
+        <div class="card-hover glass-card rounded-2xl overflow-hidden shadow-xl cursor-pointer" onclick="openAttractionDetail('namtok-mae-rewa')">
+         <div class="relative h-56 overflow-hidden"><img src="C:\งานเว็ปไซต์\แม่เรว่า.png" alt="น้ำตกแม่เรวา" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1a472a, #2d5a3f)';">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4"><span class="bg-emerald-500 text-white px-2 py-1 rounded text-xs font-bold">น้ำตก 9 ชั้น</span>
+          </div>
+         </div>
+         <div class="p-5">
+          <h3 class="font-display text-xl font-bold text-emerald-900 mb-2">3. น้ำตกแม่เรวา</h3>
+          <p class="text-gray-600 text-sm mb-3">น้ำตก 9 ชั้นที่สวยงามที่สุด เกิดจากลำห้วยแม่เรวา มีทางเดินศึกษาธรรมชาติผ่านป่าดิบชื้น</p>
+          <div class="flex items-center justify-between text-sm"><span class="text-emerald-600">📍 ~130 กม.</span> <span class="gold-accent font-bold">ดูรายละเอียด →</span>
+          </div>
+         </div>
+        </div><!-- Attraction 4: ยอดเขาโมโกจู -->
+        <div class="card-hover glass-card rounded-2xl overflow-hidden shadow-xl cursor-pointer" onclick="openAttractionDetail('yod-khao-mokochu')">
+         <div class="relative h-56 overflow-hidden"><img src="C:\งานเว็ปไซต์\เขาโมจู.png" alt="ยอดเขาโมโกจู" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1a472a, #2d5a3f)';">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4"><span class="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">เทรคกิ้ง</span>
+          </div>
+         </div>
+         <div class="p-5">
+          <h3 class="font-display text-xl font-bold text-emerald-900 mb-2">4. ยอดเขาโมโกจู</h3>
+          <p class="text-gray-600 text-sm mb-3">ยอดเขาสูงที่สุดในนครสวรรค์ สูง 1,964 เมตร ต้องเดินเทรค 2 วัน 1 คืน ชมทะเลหมอกและพระอาทิตย์ขึ้น</p>
+          <div class="flex items-center justify-between text-sm"><span class="text-emerald-600">📍 ~140 กม.</span> <span class="gold-accent font-bold">ดูรายละเอียด →</span>
+          </div>
+         </div>
+        </div><!-- Attraction 5: อุทยานแห่งชาติแม่วงก์ -->
+        <div class="card-hover glass-card rounded-2xl overflow-hidden shadow-xl cursor-pointer" onclick="openAttractionDetail('mae-wong-national-park')">
+         <div class="relative h-56 overflow-hidden"><img src="C:\งานเว็ปไซต์\อุดธยาน.png" alt="อุทยานแห่งชาติแม่วงก์" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1a472a, #2d5a3f)';">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4"><span class="bg-amber-500 text-white px-2 py-1 rounded text-xs font-bold">ที่ทำการ</span>
+          </div>
+         </div>
+         <div class="p-5">
+          <h3 class="font-display text-xl font-bold text-emerald-900 mb-2">5. อุทยานแห่งชาติแม่วงก์</h3>
+          <p class="text-gray-600 text-sm mb-3">ศูนย์กลางการท่องเที่ยว มีบริการบ้านพัก ลานกางเต็นท์ เป็นจุดเริ่มต้นเส้นทางศึกษาธรรมชาติ</p>
+          <div class="flex items-center justify-between text-sm"><span class="text-emerald-600">📍 ~120 กม.</span> <span class="gold-accent font-bold">ดูรายละเอียด →</span>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+    </div><!-- FOOD PAGE -->
+    <div id="page-food" class="page-content hidden">
+     <section class="py-12 luxury-gradient">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+       <p class="gold-accent tracking-widest mb-2">✦ LOCAL CUISINE ✦</p>
+       <h1 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">อาหารน่ากินในแม่วงก์</h1>
+       <p class="text-emerald-100 max-w-2xl mx-auto">รสชาติแห่งท้องถิ่นที่ต้องลอง</p>
+      </div>
+     </section>
+     <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4"><!-- Featured Dishes -->
+       <div class="mb-16">
+        <h2 class="font-display text-3xl font-bold text-emerald-900 mb-8 text-center">เมนูแนะนำ</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+         <div class="glass-card rounded-xl overflow-hidden card-hover">
+          <div class="h-48 overflow-hidden"><img src="C:\งานเว็ปไซต์\ไก่แม่วงก์.jpg" alt="ไก่ย่างแม่วงก์" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='#f3f4f6';">
+          </div>
+          <div class="p-4">
+           <h3 class="font-bold text-emerald-900 mb-1">🍗 ไก่ย่างแม่วงก์</h3>
+           <p class="text-gray-600 text-sm">ไก่บ้านย่างถ่าน หมักสมุนไพรพื้นบ้าน หนังกรอบ เนื้อนุ่มฉ่ำ</p>
+           <p class="text-emerald-600 font-medium mt-2">💰 80-120 บาท</p>
+          </div>
+         </div>
+         <div class="glass-card rounded-xl overflow-hidden card-hover">
+          <div class="h-48 overflow-hidden"><img src="C:\งานเว็ปไซต์\แกงหมูป่า.png" alt="แกงป่าหมูป่า" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='#f3f4f6';">
+          </div>
+          <div class="p-4">
+           <h3 class="font-bold text-emerald-900 mb-1">🍲 แกงป่าหมูป่า</h3>
+           <p class="text-gray-600 text-sm">แกงป่าสูตรดั้งเดิม ใส่ผักพื้นบ้าน เผ็ดร้อนถึงใจ</p>
+           <p class="text-emerald-600 font-medium mt-2">💰 60-100 บาท</p>
+          </div>
+         </div>
+         <div class="glass-card rounded-xl overflow-hidden card-hover">
+          <div class="h-48 overflow-hidden"><img src="C:\งานเว็ปไซต์\ปลาเผ่า.png" alt="ปลาเผาเกลือ" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='#f3f4f6';">
+          </div>
+          <div class="p-4">
+           <h3 class="font-bold text-emerald-900 mb-1">🐟 ปลาเผาเกลือ</h3>
+           <p class="text-gray-600 text-sm">ปลานิลสดจากเขื่อน เผาเกลือกรอบนอกนุ่มใน</p>
+           <p class="text-emerald-600 font-medium mt-2">💰 100-180 บาท</p>
+          </div>
+         </div>
+         <div class="glass-card rounded-xl overflow-hidden card-hover">
+          <div class="h-48 overflow-hidden"><img src="C:\งานเว็ปไซต์\ก๋วยเตี๋ยว.png" alt="ผัดหมี่โคราช" class="w-full h-full object-cover image-zoom" loading="lazy" onerror="this.style.background='#f3f4f6';">
+          </div>
+          <div class="p-4">
+           <h3 class="font-bold text-emerald-900 mb-1">🍜 ก๋วยเตี๋ยวหมูตุ๋น</h3>
+           <p class="text-gray-600 text-sm">น้ำซุปหมูตุ๋นเข้มข้น เส้นเหนียวนุ่ม ของดีประจำถิ่น</p>
+           <p class="text-emerald-600 font-medium mt-2">💰 40-60 บาท</p>
+          </div>
+         </div>
+        </div>
+       </div><!-- Recommended Restaurants -->
+       <div>
+        <h2 class="font-display text-3xl font-bold text-emerald-900 mb-8 text-center">ร้านอาหารแนะนำ</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+         <div class="glass-card rounded-xl p-6 card-hover">
+          <div class="flex items-start gap-4">
+           <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+            🏠
+           </div>
+           <div>
+            <h3 class="font-bold text-xl text-emerald-900 mb-2">ร้านครัวแม่วงก์</h3>
+            <p class="text-gray-600 mb-3">ร้านอาหารพื้นบ้านใกล้ที่ทำการอุทยาน เมนูเด็ดคือแกงป่าและไก่ย่าง บรรยากาศร่มรื่นติดลำธาร</p>
+            <div class="flex flex-wrap gap-2"><span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-sm">⏰ 07:00-20:00</span> <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-sm">⭐ 4.5/5</span>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="glass-card rounded-xl p-6 card-hover">
+          <div class="flex items-start gap-4">
+           <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+            🍴
+           </div>
+           <div>
+            <h3 class="font-bold text-xl text-emerald-900 mb-2">ร้านอาหารริมน้ำแม่วงก์</h3>
+            <p class="text-gray-600 mb-3">ตั้งอยู่ริมแม่น้ำแม่วงก์ บรรยากาศดีมาก เมนูเด่นคือปลาเผาและอาหารทะเลน้ำจืด</p>
+            <div class="flex flex-wrap gap-2"><span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-sm">⏰ 08:00-21:00</span> <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-sm">⭐ 4.3/5</span>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="glass-card rounded-xl p-6 card-hover">
+          <div class="flex items-start gap-4">
+           <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+            ☕
+           </div>
+           <div>
+            <h3 class="font-bold text-xl text-emerald-900 mb-2">คาเฟ่ภูผาแม่วงก์</h3>
+            <p class="text-gray-600 mb-3">ร้านกาแฟวิวภูเขา กาแฟคั่วสดจากไร่ท้องถิ่น มีเบเกอรี่และของว่างทานเล่น</p>
+            <div class="flex flex-wrap gap-2"><span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-sm">⏰ 07:00-18:00</span> <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-sm">⭐ 4.7/5</span>
+            </div>
+           </div>
+          </div>
+         </div>
+         <div class="glass-card rounded-xl p-6 card-hover">
+          <div class="flex items-start gap-4">
+           <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-3xl flex-shrink-0">
+            🌿
+           </div>
+           <div>
+            <h3 class="font-bold text-xl text-emerald-900 mb-2">ตลาดสดแม่วงก์</h3>
+            <p class="text-gray-600 mb-3">ตลาดเช้าของชาวบ้าน มีอาหารพื้นบ้าน ผักสด ผลไม้ตามฤดูกาล และของฝากท้องถิ่น</p>
+            <div class="flex flex-wrap gap-2"><span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-sm">⏰ 05:00-10:00</span> <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-sm">⭐ 4.4/5</span>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+    </div><!-- SEASONS PAGE -->
+    <div id="page-seasons" class="page-content hidden">
+     <section class="py-12 luxury-gradient">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+       <p class="gold-accent tracking-widest mb-2">✦ BEST TIME TO VISIT ✦</p>
+       <h1 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">ฤดูกาลท่องเที่ยว</h1>
+       <p class="text-emerald-100 max-w-2xl mx-auto">เลือกช่วงเวลาที่เหมาะสมสำหรับแต่ละสถานที่</p>
+      </div>
+     </section>
+     <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4"><!-- Season Overview -->
+       <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <div class="glass-card rounded-xl p-8 text-center card-hover border-t-4 border-green-500">
+         <div class="text-5xl mb-4">
+          🌧️
+         </div>
+         <h3 class="font-display text-2xl font-bold text-emerald-900 mb-2">ฤดูฝน</h3>
+         <p class="text-emerald-600 font-medium mb-3">พ.ค. - ต.ค.</p>
+         <p class="text-gray-600 text-sm">น้ำตกสวยงามเต็มที่ ป่าเขียวขจี แต่ทางลื่น ไม่เหมาะเดินป่าไกล</p>
+        </div>
+        <div class="glass-card rounded-xl p-8 text-center card-hover border-t-4 border-yellow-500">
+         <div class="text-5xl mb-4">
+          ❄️
+         </div>
+         <h3 class="font-display text-2xl font-bold text-emerald-900 mb-2">ฤดูหนาว</h3>
+         <p class="text-emerald-600 font-medium mb-3">พ.ย. - ก.พ.</p>
+         <p class="text-gray-600 text-sm">อากาศเย็นสบาย ทะเลหมอกสวย เหมาะเดินป่าและขึ้นยอดเขา ⭐ แนะนำ</p>
+        </div>
+        <div class="glass-card rounded-xl p-8 text-center card-hover border-t-4 border-orange-500">
+         <div class="text-5xl mb-4">
+          ☀️
+         </div>
+         <h3 class="font-display text-2xl font-bold text-emerald-900 mb-2">ฤดูร้อน</h3>
+         <p class="text-emerald-600 font-medium mb-3">มี.ค. - เม.ย.</p>
+         <p class="text-gray-600 text-sm">อากาศร้อน เหมาะเล่นน้ำที่แก่ง น้ำตกอาจน้อยลง</p>
+        </div>
+       </div><!-- Detailed Season by Location -->
+       <h2 class="font-display text-3xl font-bold text-emerald-900 mb-8 text-center">ช่วงเวลาที่เหมาะสมของแต่ละสถานที่</h2>
+       <div class="space-y-6">
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex items-center gap-3 md:w-1/3"><span class="text-3xl">🏞️</span>
+           <h3 class="font-bold text-lg text-emerald-900">แก่งลานนกยูง</h3>
+          </div>
+          <div class="md:w-2/3">
+           <div class="flex flex-wrap gap-2 mb-2"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">✓ พ.ย.-ก.พ. (ดีที่สุด)</span> <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">○ มี.ค.-เม.ย.</span> <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">✗ ฤดูฝน</span>
+           </div>
+           <p class="text-gray-600 text-sm">ช่วงหนาวนกยูงออกมาหากินมากที่สุด เช้าตรู่ 06:00-08:00 น.</p>
+          </div>
+         </div>
+        </div>
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex items-center gap-3 md:w-1/3"><span class="text-3xl">🏝️</span>
+           <h3 class="font-bold text-lg text-emerald-900">แก่งเกาะใหญ่</h3>
+          </div>
+          <div class="md:w-2/3">
+           <div class="flex flex-wrap gap-2 mb-2"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">✓ พ.ย.-เม.ย. (เล่นน้ำได้)</span> <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">✗ ฤดูฝน (น้ำเชี่ยว)</span>
+           </div>
+           <p class="text-gray-600 text-sm">หน้าแล้งน้ำใสสวย เล่นน้ำได้ปลอดภัย ฤดูฝนน้ำเชี่ยวอันตราย</p>
+          </div>
+         </div>
+        </div>
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex items-center gap-3 md:w-1/3"><span class="text-3xl">💦</span>
+           <h3 class="font-bold text-lg text-emerald-900">น้ำตกแม่เรวา</h3>
+          </div>
+          <div class="md:w-2/3">
+           <div class="flex flex-wrap gap-2 mb-2"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">✓ ส.ค.-พ.ย. (น้ำมากสวย)</span> <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">○ ธ.ค.-ก.พ.</span> <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm">△ มี.ค.-พ.ค. (น้ำน้อย)</span>
+           </div>
+           <p class="text-gray-600 text-sm">ปลายฝนต้นหนาวน้ำตกสวยที่สุด น้ำไหลแรงทั้ง 9 ชั้น</p>
+          </div>
+         </div>
+        </div>
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex items-center gap-3 md:w-1/3"><span class="text-3xl">⛰️</span>
+           <h3 class="font-bold text-lg text-emerald-900">ยอดเขาโมโกจู</h3>
+          </div>
+          <div class="md:w-2/3">
+           <div class="flex flex-wrap gap-2 mb-2"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">✓ พ.ย.-ก.พ. (ดีที่สุด)</span> <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">✗ พ.ค.-ต.ค. (ปิดเส้นทาง)</span>
+           </div>
+           <p class="text-gray-600 text-sm">เปิดให้ขึ้นเฉพาะหน้าหนาว ทะเลหมอก อุณหภูมิต่ำสุด 5-10°C ต้องจองล่วงหน้า</p>
+          </div>
+         </div>
+        </div>
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex items-center gap-3 md:w-1/3"><span class="text-3xl">🌲</span>
+           <h3 class="font-bold text-lg text-emerald-900">อุทยานแห่งชาติแม่วงก์</h3>
+          </div>
+          <div class="md:w-2/3">
+           <div class="flex flex-wrap gap-2 mb-2"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">✓ ตลอดทั้งปี</span> <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">★ พ.ย.-ก.พ. (แนะนำ)</span>
+           </div>
+           <p class="text-gray-600 text-sm">เปิดให้บริการตลอดปี แต่หน้าหนาวอากาศดีที่สุด กิจกรรมครบครัน</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+    </div><!-- EQUIPMENT PAGE -->
+    <div id="page-equipment" class="page-content hidden">
+     <section class="py-12 luxury-gradient">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+       <p class="gold-accent tracking-widest mb-2">✦ PACKING LIST ✦</p>
+       <h1 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">อุปกรณ์เตรียมตัว</h1>
+       <p class="text-emerald-100 max-w-2xl mx-auto">สิ่งที่ต้องเตรียมก่อนออกเดินทางไปแม่วงก์</p>
+      </div>
+     </section>
+     <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4">
+       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"><!-- Essential Items -->
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-2xl">
+           🎒
+          </div>
+          <h3 class="font-bold text-xl text-emerald-900">สิ่งจำเป็น</h3>
+         </div>
+         <ul class="space-y-3">
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> บัตรประชาชน/บัตรนักศึกษา</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> เงินสด (ATM มีน้อย)</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> โทรศัพท์ + แบตสำรอง</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> ยาประจำตัว/ยาสามัญ</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> ไฟฉาย/ไฟคาดหัว</li>
+         </ul>
+        </div><!-- Clothing -->
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl">
+           👕
+          </div>
+          <h3 class="font-bold text-xl text-emerald-900">เสื้อผ้า</h3>
+         </div>
+         <ul class="space-y-3">
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> เสื้อแขนยาว (กันหนาว/แดด)</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> กางเกงขายาว</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> เสื้อกันหนาว/แจ็คเก็ต</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> ชุดว่ายน้ำ (เล่นน้ำตก/แก่ง)</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> หมวก/แว่นกันแดด</li>
+         </ul>
+        </div><!-- Footwear -->
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-2xl">
+           👟
+          </div>
+          <h3 class="font-bold text-xl text-emerald-900">รองเท้า</h3>
+         </div>
+         <ul class="space-y-3">
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> รองเท้าเดินป่า (พื้นยาง)</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> รองเท้าแตะ (ใส่ในที่พัก)</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> ถุงเท้าหนาๆ</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-red-500">✗</span> รองเท้าส้นสูง/รองเท้าผ้าใบบาง</li>
+         </ul>
+        </div><!-- Camping Gear -->
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl">
+           ⛺
+          </div>
+          <h3 class="font-bold text-xl text-emerald-900">อุปกรณ์แคมป์ (ถ้ากางเต็นท์)</h3>
+         </div>
+         <ul class="space-y-3">
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> เต็นท์ (หรือเช่าที่อุทยาน)</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> ถุงนอน/ผ้าห่ม</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> แผ่นรองนอน</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> เก้าอี้พับ/ผ้าปูนั่ง</li>
+         </ul>
+        </div><!-- For Trekking -->
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-2xl">
+           🥾
+          </div>
+          <h3 class="font-bold text-xl text-emerald-900">สำหรับเดินป่า/เทรค</h3>
+         </div>
+         <ul class="space-y-3">
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> ไม้เท้าเดินป่า</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> กระติกน้ำ 2 ลิตรขึ้นไป</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> อาหารเสริม/ขนมให้พลังงาน</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> ถุงมือ (สำหรับขึ้นโมโกจู)</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> เสื้อกันฝน</li>
+         </ul>
+        </div><!-- Toiletries -->
+        <div class="glass-card rounded-xl p-6">
+         <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center text-2xl">
+           🧴
+          </div>
+          <h3 class="font-bold text-xl text-emerald-900">ของใช้ส่วนตัว</h3>
+         </div>
+         <ul class="space-y-3">
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> ครีมกันแดด SPF50+</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> สเปรย์กันยุง</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> ผ้าเช็ดตัว</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> แปรง/ยาสีฟัน/สบู่</li>
+          <li class="flex items-center gap-2 text-gray-700"><span class="text-emerald-500">✓</span> ทิชชู่เช็ดเบา</li>
+         </ul>
+        </div>
+       </div><!-- Special Note for Mokochu -->
+       <div class="mt-12 glass-card rounded-xl p-8 border-l-4 border-yellow-400">
+        <h3 class="font-bold text-xl text-emerald-900 mb-4 flex items-center gap-2"><span class="text-2xl">⚠️</span> หมายเหตุสำหรับขึ้นยอดเขาโมโกจู</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+         <div>
+          <h4 class="font-medium text-emerald-800 mb-2">ต้องเตรียมเพิ่มเติม:</h4>
+          <ul class="space-y-2 text-gray-700 text-sm">
+           <li>• เสื้อกันหนาวหนา (อุณหภูมิ 5-10°C)</li>
+           <li>• ถุงนอนที่อุ่นมาก</li>
+           <li>• อาหาร-น้ำสำหรับ 2 วัน</li>
+           <li>• หัวไฟ LED คาดหัว</li>
+          </ul>
+         </div>
+         <div>
+          <h4 class="font-medium text-emerald-800 mb-2">ข้อควรรู้:</h4>
+          <ul class="space-y-2 text-gray-700 text-sm">
+           <li>• ต้องจองล่วงหน้าผ่านอุทยาน</li>
+           <li>• รับนักท่องเที่ยว 40 คน/วัน</li>
+           <li>• เดินทาง 2 วัน 1 คืน</li>
+           <li>• ต้องมีไกด์นำทาง</li>
+          </ul>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+    </div><!-- CONTACT PAGE -->
+    <div id="page-contact" class="page-content hidden">
+     <section class="py-12 luxury-gradient">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+       <p class="gold-accent tracking-widest mb-2">✦ CONTACT US ✦</p>
+       <h1 class="font-display text-4xl md:text-5xl font-bold text-white mb-4">ติดต่อเรา</h1>
+       <p class="text-emerald-100 max-w-2xl mx-auto">ข้อมูลการติดต่อและการเดินทาง</p>
+      </div>
+     </section>
+     <section class="py-16 bg-gray-50">
+      <div class="max-w-5xl mx-auto px-4">
+       <div class="grid md:grid-cols-2 gap-8"><!-- Contact Info -->
+        <div class="glass-card rounded-xl p-8">
+         <h3 class="font-display text-2xl font-bold text-emerald-900 mb-6">ข้อมูลติดต่อ</h3>
+         <div class="space-y-6">
+          <div class="flex items-start gap-4">
+           <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl flex-shrink-0">
+            📍
+           </div>
+           <div>
+            <h4 class="font-bold text-emerald-900">ที่อยู่อุทยานแห่งชาติแม่วงก์</h4>
+            <p class="text-gray-600">ต.แม่เล่ย์ อ.แม่วงก์ จ.นครสวรรค์ 60150</p>
+           </div>
+          </div>
+          <div class="flex items-start gap-4">
+           <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl flex-shrink-0">
+            📞
+           </div>
+           <div>
+            <h4 class="font-bold text-emerald-900">โทรศัพท์</h4>
+            <p class="text-gray-600">อุทยานฯ: 056-009-529</p>
+            <p class="text-gray-600">สำรองที่พัก: 02-562-0760</p>
+           </div>
+          </div>
+          <div class="flex items-start gap-4">
+           <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl flex-shrink-0">
+            🌐
+           </div>
+           <div>
+            <h4 class="font-bold text-emerald-900">เว็บไซต์</h4><a href="https://nps.dnp.go.th" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline">nps.dnp.go.th (จองที่พัก)</a>
+           </div>
+          </div>
+          <div class="flex items-start gap-4">
+           <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl flex-shrink-0">
+            ⏰
+           </div>
+           <div>
+            <h4 class="font-bold text-emerald-900">เวลาทำการ</h4>
+            <p class="text-gray-600">เปิดทุกวัน 06:00 - 18:00 น.</p>
+           </div>
+          </div>
+         </div>
+        </div><!-- Travel Info -->
+        <div class="glass-card rounded-xl p-8">
+         <h3 class="font-display text-2xl font-bold text-emerald-900 mb-6">การเดินทาง</h3>
+         <div class="space-y-4">
+          <div class="p-4 bg-emerald-50 rounded-lg">
+           <h4 class="font-bold text-emerald-900 mb-2">🚗 จากมหาวิทยาลัยราชภัฏนครสวรรค์</h4>
+           <p class="text-gray-600 text-sm mb-2">ระยะทาง: ประมาณ 120 กิโลเมตร</p>
+           <p class="text-gray-600 text-sm">เวลาเดินทาง: ประมาณ 2-2.5 ชั่วโมง</p>
+           <p class="text-gray-600 text-sm mt-2">เส้นทาง: ถนนหลวงหมายเลข 1 → แยกลาดยาว → ทางหลวง 1072 → อุทยานฯ</p>
+          </div>
+          <div class="p-4 bg-amber-50 rounded-lg">
+           <h4 class="font-bold text-emerald-900 mb-2">💰 ค่าธรรมเนียมเข้าอุทยาน</h4>
+           <p class="text-gray-600 text-sm">ผู้ใหญ่ชาวไทย: 40 บาท</p>
+           <p class="text-gray-600 text-sm">เด็กชาวไทย: 20 บาท</p>
+           <p class="text-gray-600 text-sm">ผู้ใหญ่ชาวต่างชาติ: 200 บาท</p>
+           <p class="text-gray-600 text-sm">รถยนต์: 30 บาท</p>
+          </div>
+          <div class="p-4 bg-blue-50 rounded-lg">
+           <h4 class="font-bold text-emerald-900 mb-2">🏨 ที่พักในอุทยาน</h4>
+           <p class="text-gray-600 text-sm">บ้านพัก: 800-2,000 บาท/คืน</p>
+           <p class="text-gray-600 text-sm">ลานกางเต็นท์: 30 บาท/คน/คืน</p>
+           <p class="text-gray-600 text-sm">เช่าเต็นท์: 150-350 บาท</p>
+          </div>
+         </div>
+        </div>
+       </div><!-- Map Embed Placeholder -->
+       <div class="mt-8 glass-card rounded-xl p-4 overflow-hidden mb-12">
+        <div class="bg-emerald-100 rounded-lg h-64 flex items-center justify-center">
+         <div class="text-center"><span class="text-5xl mb-4 block">🗺️</span>
+          <p class="text-emerald-700 font-medium">แผนที่อุทยานแห่งชาติแม่วงก์</p><a href="https://www.google.com/maps/place/%E0%B8%A8%E0%B8%B9%E0%B8%99%E0%B8%A2%E0%B9%8C%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%99%E0%B8%B1%E0%B8%81%E0%B8%97%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B9%80%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%A7+%E0%B8%AD%E0%B8%B8%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%99%E0%B9%81%E0%B8%AB%E0%B9%88%E0%B8%87%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4%E0%B9%81%E0%B8%A1%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B8%81%E0%B9%8C+%E0%B8%81%E0%B8%B3%E0%B9%81%E0%B8%9E%E0%B8%87%E0%B9%80%E0%B8%9E%E0%B8%8A%E0%B8%A3/@16.0390625,99.2334251,17z/data=!3m1!4b1!4m6!3m5!1s0x30e0b692323868bd:0x1d0100b2df32ff70!8m2!3d16.0390625!4d99.2334251!16s%2Fm%2F09gdsp4?entry=ttu&g_ep=EgoyMDI2MDEyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline text-sm">เปิดใน Google Maps →</a>
+         </div>
+        </div>
+       </div><!-- Creator Section -->
+       <div class="mt-16 pt-12 border-t-2 border-emerald-200">
+        <div class="text-center mb-12">
+         <p class="gold-accent tracking-widest mb-2">✦ CREATOR ✦</p>
+         <h2 class="font-display text-3xl md:text-4xl font-bold text-emerald-900 mb-4">ผู้จัดทำเว็บไซต์</h2>
+         <p class="text-gray-600">นักศึกษามหาวิทยาลัยราชภัฏนครสวรรค์</p>
+        </div>
+        <div class="flex justify-center"><!-- Creator - Single -->
+         <div class="glass-card rounded-xl overflow-hidden text-center card-hover max-w-md w-full">
+          <div class="h-80 bg-gradient-to-br from-emerald-100 to-blue-200 flex items-center justify-center">
+           <div class="w-56 h-56 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden"><img src="C:\งานเว็ปไซต์\1.jpg" alt="ผู้จัดทำ" class="w-full h-full object-cover" loading="lazy">
+           </div>
+          </div>
+          <div class="p-8">
+           <h3 class="font-display text-2xl font-bold text-emerald-900 mb-2">นายพีรพัฒน์ แก้วมาตย์</h3>
+           <p class="text-emerald-600 font-semibold mb-1">สาขาวิชาคอมพิวเตอร์ธุรกิจ</p>
+           <p class="text-gray-600 text-sm mb-6">นักศึกษาชั้นปีที่ 2 มหาวิทยาลัยราชภัฏนครสวรรค์</p>
+           <div class="mb-6 space-y-2 text-left">
+            <p class="text-gray-700"><strong>หน้าที่:</strong> ผู้ออกแบบและพัฒนาเว็บไซต์</p>
+            <p class="text-gray-700"><strong>งานที่ทำ:</strong></p>
+            <ul class="text-gray-600 text-sm space-y-1 ml-4">
+             <li>✓ ออกแบบและพัฒนาส่วนติดต่อเว็บไซต์</li>
+             <li>✓ เก็บรวบรวมข้อมูลการท่องเที่ยว</li>
+             <li>✓ จัดเรียงและแก้ไขเนื้อหา</li>
+             <li>✓ พัฒนาระบบแชทบอท</li>
+             <li>✓ ทดสอบและปรับปรุงประสิทธิภาพ</li>
+            </ul>
+           </div>
+           <div class="border-t border-gray-200 pt-6">
+            <p class="text-gray-600 text-xs mb-4 font-medium">ติดต่อได้ที่:</p>
+            <div class="flex flex-col gap-3"><a href="tel:0812345678" class="inline-flex items-center justify-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold p-3 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-colors"> 📞 065-046-7379 </a> <a href="mailto:somchai@nsu.ac.th" class="inline-flex items-center justify-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold p-3 bg-emerald-50 rounded-lg hover:bg-emerald-100 transition-colors"> ✉️ phiraphat.kaewmart@nsu.ac.th </a>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div><!-- Project Info -->
+        <div class="mt-12 glass-card rounded-xl p-8 bg-gradient-to-r from-emerald-50 to-blue-50">
+         <h3 class="font-display text-2xl font-bold text-emerald-900 mb-6 text-center">ข้อมูลโครงการ</h3>
+         <div class="grid md:grid-cols-2 gap-8">
+          <div>
+           <h4 class="font-bold text-emerald-800 mb-4 flex items-center gap-2"><span class="text-2xl">📚</span> เรื่องโครงการ</h4>
+           <p class="text-gray-700 leading-relaxed">เว็บไซต์นี้จัดทำขึ้นเพื่อแนะนำและส่งเสริมการท่องเที่ยวในอุทยานแห่งชาติแม่วงก์ จังหวัดนครสวรรค์ โดยให้ข้อมูลรายละเอียดเกี่ยวกับสถานที่ท่องเที่ยว อาหารท้องถิ่น ฤดูกาลที่เหมาะสม และอุปกรณ์ที่ต้องเตรียม เพื่อให้นักท่องเที่ยวได้วางแผนการเดินทางได้อย่างมีประสิทธิภาพ</p>
+          </div>
+          <div>
+           <h4 class="font-bold text-emerald-800 mb-4 flex items-center gap-2"><span class="text-2xl">🎓</span> สถาบันการศึกษา</h4>
+           <p class="text-gray-700 mb-4"><strong>มหาวิทยาลัยราชภัฏนครสวรรค์</strong></p>
+           <p class="text-gray-600 text-sm">วิชา: การออกแบบและพัฒนาเว็บเพื่องานธุรกิจ<br>
+             รหัสวิชา: 3242103<br>
+             ภาคเรียน: ภาคปลาย ปีการศึกษา 2567</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+    </div>
+   </div><!-- Chatbot Widget -->
+   <div id="chatbot-widget" class="fixed bottom-6 right-6 z-50"><button onclick="openChatbot()" class="chat-bubble w-16 h-16 luxury-gradient rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform"> <span class="text-3xl">💬</span> </button>
+   </div><!-- Chatbot Modal -->
+   <div id="chatbot-modal" class="fixed inset-0 z-50 hidden">
+    <div class="modal-overlay absolute inset-0" onclick="closeChatbot()"></div>
+    <div class="absolute bottom-24 right-6 w-96 max-w-[calc(100vw-3rem)] bg-white rounded-2xl shadow-2xl overflow-hidden fade-in">
+     <div class="luxury-gradient p-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center"><span class="text-xl">🌿</span>
+       </div>
+       <div>
+        <h3 class="text-white font-bold">Mae Wong Assistant</h3>
+        <p class="text-emerald-200 text-xs">พร้อมช่วยเหลือคุณ</p>
+       </div>
+      </div><button onclick="closeChatbot()" class="text-white text-2xl hover:text-yellow-300">×</button>
+     </div>
+     <div id="chat-messages" class="h-80 overflow-y-auto p-4 space-y-4 bg-gray-50">
+      <div class="flex gap-3">
+       <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+        🌿
+       </div>
+       <div class="bg-white rounded-2xl rounded-tl-none p-3 shadow-sm max-w-[80%]">
+        <p class="text-gray-700 text-sm">สวัสดีครับ! 🙏 ยินดีต้อนรับสู่แม่วงก์ ผมพร้อมช่วยตอบคำถามเกี่ยวกับการท่องเที่ยวครับ</p>
+       </div>
+      </div>
+     </div>
+     <div class="p-4 border-t bg-white">
+      <div class="flex gap-2 mb-3 flex-wrap"><button onclick="sendQuickMessage('ที่พักมีอะไรบ้าง')" class="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs hover:bg-emerald-100">ที่พักมีอะไรบ้าง?</button> <button onclick="sendQuickMessage('ฤดูไหนควรไป')" class="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs hover:bg-emerald-100">ฤดูไหนควรไป?</button> <button onclick="sendQuickMessage('ค่าใช้จ่ายเท่าไหร่')" class="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs hover:bg-emerald-100">ค่าใช้จ่ายเท่าไหร่?</button>
+      </div>
+      <div class="flex gap-2"><input type="text" id="chat-input" placeholder="พิมพ์ข้อความ..." class="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" onkeypress="handleChatKeypress(event)"> <button onclick="sendMessage()" class="w-10 h-10 luxury-gradient rounded-full flex items-center justify-center text-white hover:shadow-lg transition-shadow"> → </button>
+      </div>
+     </div>
+    </div>
+   </div><!-- Gallery Modal -->
+   <div id="gallery-modal" class="fixed inset-0 z-50 hidden">
+    <div class="modal-overlay absolute inset-0" onclick="closeGallery()"></div>
+    <div class="absolute inset-4 md:inset-12 bg-white rounded-2xl shadow-2xl overflow-hidden fade-in flex flex-col">
+     <div class="luxury-gradient p-4 flex items-center justify-between flex-shrink-0">
+      <h3 id="gallery-title" class="text-white font-bold text-xl">แกลเลอรี่รูปภาพ</h3><button onclick="closeGallery()" class="text-white text-3xl hover:text-yellow-300 leading-none">×</button>
+     </div>
+     <div class="flex-1 overflow-hidden flex flex-col p-4 bg-gray-900"><!-- Main Image -->
+      <div class="flex-1 flex items-center justify-center mb-4 min-h-0"><img id="gallery-main-image" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg">
+      </div><!-- Thumbnails -->
+      <div id="gallery-thumbnails" class="flex gap-2 overflow-x-auto pb-2 flex-shrink-0"><!-- Thumbnails will be inserted here -->
+      </div>
+     </div>
+    </div>
+   </div><!-- Attraction Detail Modal -->
+   <div id="attraction-modal" class="fixed inset-0 z-50 hidden">
+    <div class="modal-overlay absolute inset-0" onclick="closeAttractionModal()"></div>
+    <div class="absolute inset-4 md:inset-8 bg-white rounded-2xl shadow-2xl overflow-hidden fade-in flex flex-col">
+     <div class="luxury-gradient p-4 flex items-center justify-between flex-shrink-0">
+      <h3 id="attraction-modal-title" class="text-white font-bold text-xl">รายละเอียดสถานที่</h3><button onclick="closeAttractionModal()" class="text-white text-3xl hover:text-yellow-300 leading-none">×</button>
+     </div>
+     <div id="attraction-modal-content" class="flex-1 overflow-y-auto"><!-- Content will be inserted here -->
+     </div>
+    </div>
+   </div><!-- Footer -->
+   <footer class="luxury-gradient py-12">
+    <div class="max-w-7xl mx-auto px-4">
+     <div class="grid md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-full gold-bg flex items-center justify-center"><span class="text-xl">🌿</span>
+        </div><span class="text-white font-display text-xl font-bold">Mae Wong Tourism</span>
+       </div>
+       <p class="text-emerald-200 text-sm">เว็บไซต์แนะนำการท่องเที่ยวอุทยานแห่งชาติแม่วงก์ จังหวัดนครสวรรค์</p>
+      </div>
+      <div>
+       <h4 class="text-white font-bold mb-4">ลิงก์ด่วน</h4>
+       <ul class="space-y-2">
+        <li><a onclick="navigateTo('attractions')" class="text-emerald-200 hover:text-yellow-300 cursor-pointer text-sm">สถานที่ท่องเที่ยว</a></li>
+        <li><a onclick="navigateTo('food')" class="text-emerald-200 hover:text-yellow-300 cursor-pointer text-sm">อาหารน่ากิน</a></li>
+        <li><a onclick="navigateTo('seasons')" class="text-emerald-200 hover:text-yellow-300 cursor-pointer text-sm">ฤดูกาลท่องเที่ยว</a></li>
+        <li><a onclick="navigateTo('equipment')" class="text-emerald-200 hover:text-yellow-300 cursor-pointer text-sm">อุปกรณ์เตรียมตัว</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="text-white font-bold mb-4">สถานที่ท่องเที่ยว</h4>
+       <ul class="space-y-2">
+        <li><a onclick="openAttractionDetail('kaeng-lan-nok-yung')" class="text-emerald-200 hover:text-yellow-300 cursor-pointer text-sm">แก่งลานนกยูง</a></li>
+        <li><a onclick="openAttractionDetail('kaeng-koh-yai')" class="text-emerald-200 hover:text-yellow-300 cursor-pointer text-sm">แก่งเกาะใหญ่</a></li>
+        <li><a onclick="openAttractionDetail('namtok-mae-rewa')" class="text-emerald-200 hover:text-yellow-300 cursor-pointer text-sm">น้ำตกแม่เรวา</a></li>
+        <li><a onclick="openAttractionDetail('yod-khao-mokochu')" class="text-emerald-200 hover:text-yellow-300 cursor-pointer text-sm">ยอดเขาโมโกจู</a></li>
+       </ul>
+      </div>
+      <div>
+       <h4 class="text-white font-bold mb-4">ติดต่อ</h4>
+       <ul class="space-y-2 text-emerald-200 text-sm">
+        <li>📍 อ.แม่วงก์ จ.นครสวรรค์</li>
+        <li>📞 056-009-529</li>
+        <li>🌐 nps.dnp.go.th</li>
+       </ul>
+      </div>
+     </div>
+     <div class="section-divider mb-8"></div>
+     <div class="text-center">
+      <p class="text-emerald-200 text-sm">© 2024 Mae Wong Tourism Guide. สร้างด้วย ❤️ สำหรับนักท่องเที่ยว</p>
+      <p class="text-emerald-300 text-xs mt-2">ข้อมูลอ้างอิงจาก กรมอุทยานแห่งชาติ สัตว์ป่า และพันธุ์พืช</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    // Default Configuration
+    const defaultConfig = {
+      site_title: 'Mae Wong Tourism',
+      welcome_text: 'ยินดีต้อนรับสู่แม่วงก์',
+      background_color: '#f9fafb',
+      primary_color: '#1a472a',
+      text_color: '#1f2937',
+      accent_color: '#d4af37',
+      secondary_color: '#2d5a3f'
+    };
+
+    let config = { ...defaultConfig };
+
+    // Attraction Data
+    const attractionsData = {
+      'kaeng-lan-nok-yung': {
+        name: 'แก่งลานนกยูง',
+        nameEn: 'Kaeng Lan Nok Yung',
+        description: 'แก่งลานนกยูงเป็นลานหินกว้างริมแม่น้ำแม่วงก์ มีลักษณะเป็นลานหินทรายขนาดใหญ่ ตั้งอยู่ริมน้ำ เป็นจุดที่นกยูงป่ามาหากินเป็นประจำในช่วงเช้าตรู่และเย็น โดยเฉพาะในฤดูหนาว นักท่องเที่ยวสามารถกางเต็นท์พักแรมและชมนกยูงได้ในระยะกล้อง',
+        highlights: [
+          'ชมนกยูงป่าในธรรมชาติ ช่วงเวลา 06:00-08:00 น. และ 16:00-18:00 น.',
+          'ลานกางเต็นท์ริมน้ำบรรยากาศดี',
+          'เล่นน้ำในแม่น้ำแม่วงก์ช่วงหน้าแล้ง',
+          'ถ่ายภาพธรรมชาติและสัตว์ป่า',
+          'ใกล้ที่ทำการอุทยานฯ สะดวกเดินทาง'
+        ],
+        distance: '~125 กิโลเมตร จากมหาวิทยาลัยราชภัฏนครสวรรค์',
+        travelTime: 'ประมาณ 2-2.5 ชั่วโมง',
+        bestSeason: 'พฤศจิกายน - กุมภาพันธ์ (ช่วงนกยูงออกหากินมากที่สุด)',
+        tips: 'ควรมาถึงก่อน 06:00 น. เพื่อชมนกยูง ไม่ควรส่งเสียงดังหรือใช้แฟลชถ่ายรูป',
+        images: [
+          'ลานปก1.png',
+          'ลานปก3.png',
+          'ลานปก2.png',
+          'ลานปก5.png',
+          'ลานปก4.png'
+        ]
+      },
+      'kaeng-koh-yai': {
+        name: 'แก่งเกาะใหญ่',
+        nameEn: 'Kaeng Koh Yai',
+        description: 'แก่งเกาะใหญ่เป็นแก่งหินขนาดใหญ่กลางลำน้ำแม่วงก์ มีลักษณะเป็นเกาะหินขนาดใหญ่ที่มีต้นไม้ขึ้นปกคลุม น้ำใสเย็นไหลผ่านตลอดปี เป็นจุดพักผ่อนและเล่นน้ำที่นิยมมาก มีลานกางเต็นท์และจุดชมวิว',
+        highlights: [
+          'เล่นน้ำในแม่น้ำแม่วงก์น้ำใสเย็น',
+          'กางเต็นท์พักแรมริมน้ำ',
+          'ชมวิวทิวทัศน์ของแก่งหินกลางน้ำ',
+          'เหมาะสำหรับครอบครัวและกลุ่มเพื่อน',
+          'บรรยากาศร่มรื่นเงียบสงบ'
+        ],
+        distance: '~122 กิโลเมตร จากมหาวิทยาลัยราชภัฏนครสวรรค์',
+        travelTime: 'ประมาณ 2 ชั่วโมง',
+        bestSeason: 'พฤศจิกายน - เมษายน (น้ำใสเล่นน้ำได้ปลอดภัย)',
+        tips: 'ฤดูฝนน้ำเชี่ยวอันตราย ไม่ควรลงเล่นน้ำ ควรสวมรองเท้าแตะกันลื่น',
+        images: [
+          'แก่งปก1.png',
+          'แก่งปก2.png',
+          'แก่งปก3.png',
+          'แก่งปก4.png',
+          'แก่งปก5.png'
+        ]
+      },
+      'namtok-mae-rewa': {
+        name: 'น้ำตกแม่เรวา',
+        nameEn: 'Mae Rewa Waterfall',
+        description: 'น้ำตกแม่เรวาเป็นน้ำตก 9 ชั้นที่สวยงามที่สุดในอุทยานแห่งชาติแม่วงก์ เกิดจากลำห้วยแม่เรวาที่ไหลลงมาจากเทือกเขาโมโกจู มีทางเดินศึกษาธรรมชาติผ่านป่าดิบชื้นไปยังน้ำตกแต่ละชั้น ระยะทางประมาณ 1.5 กิโลเมตร',
+        highlights: [
+          'น้ำตก 9 ชั้นสวยงามตระการตา',
+          'ทางเดินศึกษาธรรมชาติผ่านป่าดิบชื้น',
+          'จุดลงเล่นน้ำหลายจุด',
+          'พบพืชพรรณและสัตว์ป่าหลากหลาย',
+          'อากาศเย็นสบายตลอดทั้งปี'
+        ],
+        distance: '~130 กิโลเมตร จากมหาวิทยาลัยราชภัฏนครสวรรค์',
+        travelTime: 'ประมาณ 2.5 ชั่วโมง + เดินเท้า 1.5 กม.',
+        bestSeason: 'สิงหาคม - พฤศจิกายน (น้ำตกสวยที่สุด)',
+        tips: 'สวมรองเท้าเดินป่าพื้นยาง ทางลื่นในหน้าฝน ใช้เวลาเดิน 1-2 ชั่วโมง',
+        images: [
+          'แม่เรว่า.png',
+          'แม่เรว่า2.png',
+          'แม่เรว่า3.png',
+          'แม่เรว่า4.png',
+          'แม่เรว่า5.png'
+        ]
+      },
+      'yod-khao-mokochu': {
+        name: 'ยอดเขาโมโกจู',
+        nameEn: 'Mokochu Peak',
+        description: 'ยอดเขาโมโกจูเป็นยอดเขาสูงที่สุดในจังหวัดนครสวรรค์ ความสูง 1,964 เมตรจากระดับน้ำทะเล เป็นส่วนหนึ่งของเทือกเขาถนนธงชัย การขึ้นยอดเขาต้องเดินเทรค 2 วัน 1 คืน ระยะทางไป-กลับประมาณ 18 กิโลเมตร จุดเด่นคือทะเลหมอกและพระอาทิตย์ขึ้นที่สวยงามมาก',
+        highlights: [
+          'ยอดเขาสูงที่สุดในนครสวรรค์',
+          'ทะเลหมอกยามเช้าสุดอลังการ',
+          'ชมพระอาทิตย์ขึ้น-ตกสวยงาม',
+          'อุณหภูมิต่ำสุด 5-10°C',
+          'พบป่าดิบเขาและพืชพรรณหายาก'
+        ],
+        distance: '~140 กิโลเมตร จากมหาวิทยาลัยราชภัฏนครสวรรค์ (+ เดินเทรค 18 กม.)',
+        travelTime: 'ประมาณ 2.5 ชั่วโมง + เดินเทรค 2 วัน 1 คืน',
+        bestSeason: 'พฤศจิกายน - กุมภาพันธ์ (เปิดเส้นทางเฉพาะหน้าหนาว)',
+        tips: 'ต้องจองล่วงหน้าผ่านอุทยานฯ รับ 40 คน/วัน เตรียมเสื้อกันหนาวหนาๆ ถุงนอนกันหนาว',
+        images: [
+          'เขาโมจู.png',
+          'ขาโมจู2.png',
+          'ขาโมจู3.png',
+          'ขาโมจู4.png',
+          'ขาโมจู5.png'
+        ]
+      },
+      'mae-wong-national-park': {
+        name: 'อุทยานแห่งชาติแม่วงก์',
+        nameEn: 'Mae Wong National Park',
+        description: 'อุทยานแห่งชาติแม่วงก์ครอบคลุมพื้นที่ 894 ตารางกิโลเมตร ในเขตจังหวัดนครสวรรค์และกำแพงเพชร เป็นส่วนหนึ่งของผืนป่าตะวันตกที่ใหญ่ที่สุดในประเทศไทย มีความหลากหลายทางชีวภาพสูง เป็นที่อยู่อาศัยของสัตว์ป่าหายาก เช่น เสือโคร่ง ช้างป่า และนกยูง',
+        highlights: [
+          'ศูนย์บริการนักท่องเที่ยว',
+          'บ้านพักและลานกางเต็นท์',
+          'จุดเริ่มต้นเส้นทางศึกษาธรรมชาติ',
+          'ร้านอาหารและสิ่งอำนวยความสะดวก',
+          'นิทรรศการเกี่ยวกับระบบนิเวศ'
+        ],
+        distance: '~120 กิโลเมตร จากมหาวิทยาลัยราชภัฏนครสวรรค์',
+        travelTime: 'ประมาณ 2-2.5 ชั่วโมง',
+        bestSeason: 'ตลอดทั้งปี (แนะนำ พ.ย.-ก.พ.)',
+        tips: 'แนะนำจองที่พักล่วงหน้าทาง nps.dnp.go.th โดยเฉพาะช่วงหน้าหนาวและวันหยุดยาว',
+        images: [
+          'อุดธยาน.png',
+          'อุดธยาน2.png',
+          'อุดธยาน3.png',
+          'อุดธยาน4.png',
+          'อุดธยาน5.png'
+        ]
+      }
+    };
+
+    // Chatbot responses
+    const chatResponses = {
+      'ที่พักมีอะไรบ้าง': 'อุทยานฯ มีที่พักหลายแบบครับ:\n\n🏠 บ้านพัก: 800-2,000 บาท/คืน\n⛺ ลานกางเต็นท์: 30 บาท/คน/คืน\n🏕️ เช่าเต็นท์: 150-350 บาท\n\nแนะนำจองล่วงหน้าที่ nps.dnp.go.th ครับ โดยเฉพาะช่วงหน้าหนาวและวันหยุดยาว',
+      'ฤดูไหนควรไป': 'แนะนำช่วงฤดูหนาว (พ.ย.-ก.พ.) ครับ เพราะ:\n\n❄️ อากาศเย็นสบาย 15-25°C\n🌫️ มีทะเลหมอกสวยงาม\n🦚 นกยูงออกมาหากินมาก\n⛰️ เปิดเส้นทางขึ้นยอดเขาโมโกจู\n\nหลีกเลี่ยงฤดูฝน (พ.ค.-ต.ค.) ถ้าจะขึ้นเขาหรือเดินป่าไกลๆ ครับ',
+      'ค่าใช้จ่ายเท่าไหร่': 'ค่าใช้จ่ายโดยประมาณครับ:\n\n🎫 ค่าเข้าอุทยาน: 40 บาท/คน\n🚗 ค่ารถยนต์: 30 บาท\n🏕️ กางเต็นท์: 30 บาท/คน/คืน\n🏠 บ้านพัก: 800-2,000 บาท/คืน\n🍜 อาหาร: 50-150 บาท/มื้อ\n⛽ น้ำมัน: ประมาณ 500-700 บาท (ไป-กลับจากนครสวรรค์)\n\nรวมประมาณ 500-2,500 บาท/คน/วัน ขึ้นอยู่กับรูปแบบที่พักครับ'
+    };
+
+    // Navigation function
+    function navigateTo(page) {
+      document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+      const targetPage = document.getElementById(`page-${page}`);
+      if (targetPage) {
+        targetPage.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // Mobile menu toggle
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Chatbot functions
+    function openChatbot() {
+      document.getElementById('chatbot-modal').classList.remove('hidden');
+    }
+
+    function closeChatbot() {
+      document.getElementById('chatbot-modal').classList.add('hidden');
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if (!message) return;
+
+      addChatMessage(message, 'user');
+      input.value = '';
+
+      setTimeout(() => {
+        let response = 'ขอบคุณสำหรับคำถามครับ! หากต้องการข้อมูลเพิ่มเติม สามารถโทรสอบถามได้ที่ 056-009-529 หรือดูข้อมูลได้ที่เมนูต่างๆ บนเว็บไซต์ครับ 🙏';
+        
+        for (const [key, value] of Object.entries(chatResponses)) {
+          if (message.includes(key) || key.includes(message)) {
+            response = value;
+            break;
+          }
+        }
+
+        if (message.includes('สถานที่') || message.includes('ไปไหน')) {
+          response = 'สถานที่ท่องเที่ยวแนะนำ:\n\n1. 🏞️ แก่งลานนกยูง - ชมนกยูงป่า\n2. 🏝️ แก่งเกาะใหญ่ - เล่นน้ำ\n3. 💦 น้ำตกแม่เรวา - น้ำตก 9 ชั้น\n4. ⛰️ ยอดเขาโมโกจู - เทรคกิ้ง\n5. 🌲 อุทยานฯ แม่วงก์ - ที่ทำการ\n\nลองกดดูรายละเอียดแต่ละที่ได้เลยครับ!';
+        }
+
+        if (message.includes('โมโกจู') || message.includes('ยอดเขา')) {
+          response = 'ยอดเขาโมโกจู (1,964 ม.) ข้อมูลสำคัญ:\n\n📅 เปิด: พ.ย.-ก.พ. เท่านั้น\n👥 รับ 40 คน/วัน\n⏱️ เดินเทรค 2 วัน 1 คืน\n🥶 อุณหภูมิ 5-10°C\n📞 จองที่อุทยานฯ\n\nต้องเตรียมเสื้อกันหนาวหนาๆ และถุงนอนอุ่นๆ ครับ!';
+        }
+
+        addChatMessage(response, 'bot');
+      }, 800);
+    }
+
+    function sendQuickMessage(message) {
+      document.getElementById('chat-input').value = message;
+      sendMessage();
+    }
+
+    function handleChatKeypress(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    function addChatMessage(message, sender) {
+      const container = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = `flex gap-3 ${sender === 'user' ? 'justify-end' : ''}`;
+      
+      if (sender === 'user') {
+        div.innerHTML = `
+          <div class="bg-emerald-600 text-white rounded-2xl rounded-tr-none p-3 shadow-sm max-w-[80%]">
+            <p class="text-sm">${message}</p>
+          </div>
+        `;
+      } else {
+        div.innerHTML = `
+          <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">🌿</div>
+          <div class="bg-white rounded-2xl rounded-tl-none p-3 shadow-sm max-w-[80%]">
+            <p class="text-gray-700 text-sm whitespace-pre-line">${message}</p>
+          </div>
+        `;
+      }
+      
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    // Gallery functions
+    let currentGalleryImages = [];
+    let currentGalleryIndex = 0;
+
+    function openGallery(attractionId) {
+      const attraction = attractionsData[attractionId];
+      if (!attraction) return;
+
+      currentGalleryImages = attraction.images;
+      currentGalleryIndex = 0;
+
+      document.getElementById('gallery-title').textContent = `แกลเลอรี่ - ${attraction.name}`;
+      updateGalleryImage();
+      renderGalleryThumbnails();
+      document.getElementById('gallery-modal').classList.remove('hidden');
+    }
+
+    function closeGallery() {
+      document.getElementById('gallery-modal').classList.add('hidden');
+    }
+
+    function updateGalleryImage() {
+      const mainImage = document.getElementById('gallery-main-image');
+      mainImage.src = currentGalleryImages[currentGalleryIndex];
+      mainImage.alt = `รูปที่ ${currentGalleryIndex + 1}`;
+      
+      document.querySelectorAll('.gallery-thumb').forEach((thumb, index) => {
+        if (index === currentGalleryIndex) {
+          thumb.classList.add('ring-2', 'ring-yellow-400');
+        } else {
+          thumb.classList.remove('ring-2', 'ring-yellow-400');
+        }
+      });
+    }
+
+    function renderGalleryThumbnails() {
+      const container = document.getElementById('gallery-thumbnails');
+      container.innerHTML = '';
+      
+      currentGalleryImages.forEach((img, index) => {
+        const thumb = document.createElement('img');
+        thumb.src = img;
+        thumb.alt = `รูปที่ ${index + 1}`;
+        thumb.className = `gallery-thumb w-20 h-16 object-cover rounded-lg cursor-pointer flex-shrink-0 ${index === 0 ? 'ring-2 ring-yellow-400' : ''}`;
+        thumb.onclick = () => {
+          currentGalleryIndex = index;
+          updateGalleryImage();
+        };
+        thumb.loading = 'lazy';
+        thumb.onerror = function() {
+          this.style.background = '#374151';
+          this.alt = 'Image unavailable';
+        };
+        container.appendChild(thumb);
+      });
+    }
+
+    // Attraction Detail Modal
+    function openAttractionDetail(attractionId) {
+      const attraction = attractionsData[attractionId];
+      if (!attraction) return;
+
+      document.getElementById('attraction-modal-title').textContent = attraction.name;
+      
+      const content = document.getElementById('attraction-modal-content');
+      content.innerHTML = `
+        <div class="relative h-72 md:h-96 overflow-hidden">
+          <img src="${attraction.images[0]}" alt="${attraction.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #1a472a, #2d5a3f)';">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <p class="text-emerald-300 text-sm mb-1">${attraction.nameEn}</p>
+            <h2 class="font-display text-3xl md:text-4xl text-white font-bold">${attraction.name}</h2>
+          </div>
+          <button onclick="openGallery('${attractionId}')" class="absolute top-4 right-4 bg-white/90 hover:bg-white px-4 py-2 rounded-full text-sm font-medium text-emerald-900 transition-colors">
+            📷 ดูรูปภาพทั้งหมด (${attraction.images.length})
+          </button>
+        </div>
+        
+        <div class="p-6 md:p-8">
+          <div class="grid md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-emerald-50 rounded-xl p-4 text-center">
+              <span class="text-2xl mb-2 block">📍</span>
+              <p class="text-sm text-gray-600">ระยะทาง</p>
+              <p class="font-bold text-emerald-900">${attraction.distance}</p>
+            </div>
+            <div class="bg-amber-50 rounded-xl p-4 text-center">
+              <span class="text-2xl mb-2 block">⏱️</span>
+              <p class="text-sm text-gray-600">เวลาเดินทาง</p>
+              <p class="font-bold text-emerald-900">${attraction.travelTime}</p>
+            </div>
+            <div class="bg-blue-50 rounded-xl p-4 text-center">
+              <span class="text-2xl mb-2 block">🗓️</span>
+              <p class="text-sm text-gray-600">ฤดูกาลที่เหมาะ</p>
+              <p class="font-bold text-emerald-900 text-sm">${attraction.bestSeason}</p>
+            </div>
+          </div>
+          
+          <div class="mb-8">
+            <h3 class="font-display text-xl font-bold text-emerald-900 mb-4">รายละเอียด</h3>
+            <p class="text-gray-700 leading-relaxed">${attraction.description}</p>
+          </div>
+          
+          <div class="mb-8">
+            <h3 class="font-display text-xl font-bold text-emerald-900 mb-4">ไฮไลท์</h3>
+            <ul class="space-y-3">
+              ${attraction.highlights.map(h => `
+                <li class="flex items-start gap-3">
+                  <span class="text-emerald-500 mt-1">✓</span>
+                  <span class="text-gray-700">${h}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+          
+          <div class="bg-yellow-50 border-l-4 border-yellow-400 rounded-r-xl p-4 mb-8">
+            <h4 class="font-bold text-emerald-900 mb-2 flex items-center gap-2">
+              <span>💡</span> เคล็ดลับ
+            </h4>
+            <p class="text-gray-700 text-sm">${attraction.tips}</p>
+          </div>
+          
+          <div class="flex flex-wrap gap-4">
+            <button onclick="openGallery('${attractionId}')" class="flex-1 min-w-[200px] luxury-gradient text-white px-6 py-3 rounded-full font-bold hover:shadow-lg transition-shadow">
+              📷 ดูแกลเลอรี่รูปภาพ
+            </button>
+            <button onclick="closeAttractionModal(); navigateTo('equipment')" class="flex-1 min-w-[200px] border-2 border-emerald-700 text-emerald-700 px-6 py-3 rounded-full font-bold hover:bg-emerald-50 transition-colors">
+              🎒 ดูอุปกรณ์ที่ต้องเตรียม
+            </button>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById('attraction-modal').classList.remove('hidden');
+    }
+
+    function closeAttractionModal() {
+      document.getElementById('attraction-modal').classList.add('hidden');
+    }
+
+    // Element SDK Implementation
+    async function onConfigChange(newConfig) {
+      Object.assign(config, newConfig);
+      
+      const siteTitle = document.getElementById('site-title');
+      if (siteTitle) {
+        siteTitle.textContent = config.site_title || defaultConfig.site_title;
+      }
+      
+      const welcomeText = document.getElementById('welcome-text');
+      if (welcomeText) {
+        const title = config.welcome_text || defaultConfig.welcome_text;
+        welcomeText.innerHTML = `${title}<br><span class="gold-accent">แม่วงก์</span>`;
+      }
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['site_title', config.site_title || defaultConfig.site_title],
+        ['welcome_text', config.welcome_text || defaultConfig.welcome_text]
+      ]);
+    }
+
+    // Initialize
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Show home page by default
+    navigateTo('home');
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c50cb3840f7f4cf',t:'MTc2OTYwNjQ5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
